@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid 19 Live Update</title>
+    <!-- My Css -->
+    <link rel="stylesheet" href="color.css">
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $.ajax({
+                url : "https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST?disableRedirect=true",
+                type : "GET",
+                dataType : "JSON",
+                success : function(data){
+                    if(data != ""){
+                        $('#country').append("<div class='c-box'><h3>activeCases</h3><h2>"
+                        +data.activeCases+
+                        "</h2></div><div class='c-box'><h3>activeCasesNew</h3><h2>"
+                        +data.activeCasesNew+
+                        "</h2></div><div class='c-box'><h3>recovered</h3><h2>"
+                        +data.recovered+
+                        "</h2></div><div class='c-box'><h3>recoveredNew</h3><h2>"
+                        +data.recoveredNew+
+                        "</h2></div><div class='c-box'><h3>deaths</h3><h2>"
+                        +data.deaths+
+                        "</h2></div><div class='c-box'><h3>deathsNew</h3><h2>"
+                        +data.deathsNew+
+                        "</h2></div><div class='c-box'><h3>totalCases</h3><h2>"+data.totalCases+"</h2></div>");
+
+                        var index = 1;
+                        $.each(data.regionData,function(key,value){
+                            $('#region').append("<div class='s-box'><h1>"
+                                +value.region+
+                                "</h1><table><tr><th>totalInfected</th><td>"
+                                +value.totalInfected+
+                                "</td></tr><tr><th>newInfected</th><td>"
+                                +value.newInfected+
+                                "</td></tr><tr><th>recovered</th><td>"
+                                +value.recovered+
+                                "</td></tr><tr><th>newRecovered</th><td>"
+                                +value.newRecovered+
+                                "</td></tr><tr><th>deceased</th><td>"
+                                +value.deceased+
+                                "</td></tr><tr><th>newDeceased</th><td>"+value.newDeceased+"</td></tr></table></div>");
+                        });
+                        
+                    }
+                }
+            });
+
+            setInterval(()=>{
+                let left = Math.random()*window.innerWidth;
+                let top = Math.random()*window.innerHeight;
+                $('.corona').css({"left":left+"px","top":top+"px"});
+            },4000);
+
+        });
+    </script>
+    <div class="corona">
+        <img class="img" src="coronavirus.png" alt="">
+    </div>
+    <div id="header">
+        <div class="logo">
+            <img src="covid.png" alt="">
+        </div>
+        <h1>Covid 19 Live Updates</h1>
+    </div>
+    <div id="content">
+        <div class="title">
+            <h1>Indian Country Records</h1>
+        </div>
+        <div id="country"></div>
+        <div class="title">
+            <h1>State Records</h1>
+        </div>
+        <div id="region"></div>
+    </div>
+    <footer>
+        <span>Design & Develop By Manish.</span> <span>Copyright &copy;2021-22</span>
+    </footer>
+</body>
+</html>
